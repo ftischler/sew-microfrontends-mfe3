@@ -1,59 +1,36 @@
-# Mfe3
+# sew-microfrontends-mfe3
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.27.
+Micro frontend for [sew-microfrontends](https://github.com/ftischler/sew-microfrontends),
+deliberately on a different Angular major (21) than the shell (22).
 
-## Development server
+It ships its own Angular runtime and shares nothing with the host. Native Federation
+exposes it as a web component, so the shell only depends on the contract below.
 
-To start a local development server, run:
+## Contract
 
-```bash
-ng serve
+Exposed module: `./web-component` from `http://<host>/remoteEntry.json`
+
+```ts
+registerMfe3Element(): Promise<void>; // defines <sew-mfe3>, safe to call more than once
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Element `<sew-mfe3>`:
 
-## Code scaffolding
+| Kind     | Name            | Type     | Meaning                                       |
+| -------- | --------------- | -------- | --------------------------------------------- |
+| property | `path`          | `string` | Sub path below the host route, e.g. `details` |
+| event    | `mfe3-navigate` | `string` | Requested sub path; the host updates the URL  |
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+The host owns the URL. The element never navigates itself; it renders `path` and asks
+the host to navigate.
 
-```bash
-ng generate component component-name
+Rendering is zoneless and styles are isolated with Shadow DOM.
+
+## Development
+
+```sh
+pnpm install
+pnpm start   # http://localhost:4203, standalone
+pnpm test
+pnpm build
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

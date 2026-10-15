@@ -1,11 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component, input, output, VERSION, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'mfe3-root',
-  imports: [],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class App {
-  protected readonly title = signal('mfe3');
+  readonly path = input('');
+  readonly navigate = output<string>({ alias: 'mfe3-navigate' });
+
+  protected readonly angularVersion = VERSION.full;
 }

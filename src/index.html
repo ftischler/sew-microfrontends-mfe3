@@ -1,13 +1,18 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Mfe3</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <mfe3-root></mfe3-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Mfe3</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <sew-mfe3></sew-mfe3>
+    <script>
+      document.querySelector('sew-mfe3').addEventListener('mfe3-navigate', (event) => {
+        event.target.path = event.detail;
+      });
+    </script>
+  </body>
 </html>
